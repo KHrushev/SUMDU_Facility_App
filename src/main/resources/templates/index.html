@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <title>Home Page</title>
+    <link href="css/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="panel-container" sec:authorize="hasAuthority('USER')">
+        <div class="panel">
+            <h1 class="header">User Cabinet</h1>
+            <div class="query-container">
+                <h3 class="query-header">Register a passage:</h3>
+                <form action="/registerPassage" method="post">
+                    <input class="rounded-left border-right date-input" type="datetime-local" name="enterTime" placeholder="Enter Time (YYYY-MM-DD HH24:MM:SS)" required>
+                    <input class="border-right date-input" type="datetime-local" name="exitTime" placeholder="Exit Time (YYYY-MM-DD HH24:MM:SS)" required>
+                    <input type="text" name="facilityID" placeholder="Facility ID" pattern="^[0-9]+$" required>
+                    <input type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${passageRegistered == 'true' or passageRegistered == 'false'}">
+                    <div th:insert="${passageRegistered == 'true'} ? ~{table-fragments.html :: passageRegistered} : ~{table-fragments.html :: passageIsNotRegistered}"></div>
+                </div>
+                <div class="table-container" th:if="${inputError} == 'true'">
+                    <div th:insert="~{table-fragments.html :: inputError}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3 class="query-header">Get my passages:</h3>
+                <form action="/userEntrances" method="get">
+                    <input class="rounded-left" type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${userEntrances == 'true' or userEntrances == 'false'}">
+                    <div th:insert="${userEntrances == 'true'} ? ~{table-fragments.html :: passagesPresent} : ~{table-fragments.html :: passagesEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3 class="query-header">Get my designated facility:</h3>
+                <form action="/designatedFacility" method="get">
+                    <input class="rounded-left" type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${designatedFacility == 'true' or designatedFacility == 'false'}">
+                    <div th:insert="${designatedFacility == 'true'} ? ~{table-fragments.html :: facilitiesFound} : ~{table-fragments.html :: passagesEmpty}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-container" sec:authorize="hasAuthority('ADMIN')">
+        <div class="panel">
+            <h1 class="header">Admin Cabinet</h1>
+
+            <div class="query-container">
+                <h3 class="query-header">Add a facility:</h3>
+                <form action="/addFacility" method="post">
+                    <input class="rounded-left border-right" type="text" name="facilityName" placeholder="Enter Facility Name" required>
+                    <input type="submit" value="Add">
+                </form>
+
+                <div class="table-container" th:if="${facilityAdded == 'true' or facilityAdded == 'false'}">
+                    <div th:insert="${facilityAdded == 'true'} ? ~{table-fragments.html :: facilityAdded} : ~{table-fragments.html :: facilityIsNotAdded}"></div>
+                </div>
+                <div class="table-container" th:if="${inputError} == 'true'">
+                    <div th:insert="~{table-fragments.html :: inputError}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3 class="query-header">Find employees that entered selected facility last week:</h3>
+                <form action="/entrancesByFacilityID" method="get">
+                    <input class="rounded-left" type="text" name="facilityID" placeholder="Facility ID" pattern="^[0-9]+$" required>
+                    <input type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${entrancesByFacilityID == 'true' or entrancesByFacilityID == 'false'}">
+                    <div th:insert="${entrancesByFacilityID == 'true'} ? ~{table-fragments.html :: employeesPresent} : ~{table-fragments.html :: employeesEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3 class="query-header">Find employees that visited particular facility:</h3>
+                <form action="/facilityVisitors" method="get">
+                    <input class="rounded-left" type="text" name="facilityID" placeholder="Facility ID" pattern="^[0-9]+$" required>
+                    <input type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${facilityVisitors == 'true' or facilityVisitors == 'false'}">
+                    <div th:insert="${facilityVisitors == 'true'} ? ~{table-fragments.html :: employeesPresent} : ~{table-fragments.html :: employeesEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3>Get list of workers who spent less than the time entered on work for the last week:</h3>
+                <form action="/hoursSpent">
+                    <input class="rounded-left border-right" type="text" name="hoursSpent" placeholder="Hours Spent" pattern="^[0-9]+$" required>
+                    <input type="text" name="facilityID" placeholder="Facility ID" pattern="^[0-9]+$" required>
+                    <input type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${hoursSpent == 'true' or hoursSpent == 'false'}">
+                    <div th:insert="${hoursSpent == 'true'} ? ~{table-fragments.html :: employeesPresent} : ~{table-fragments.html :: employeesEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3>List of employees that might have seen Employee X at Facility Y:</h3>
+                <form action="/overlappingEmployees">
+                    <input class="rounded-left border-right" type="text" name="employeeID" placeholder="Employee ID" pattern="^[0-9]+$" required>
+                    <input type="text" name="facilityID" placeholder="Facility ID" pattern="^[0-9]+$" required>
+                    <input type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${overlappingEmployees == 'true' or overlappingEmployees == 'false'}">
+                    <div th:insert="${overlappingEmployees == 'true'} ? ~{table-fragments.html :: employeesPresent} : ~{table-fragments.html :: employeesEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3>Top 5 employees by total time late to work:</h3>
+                <form action="/totalTimeLateRating">
+                    <input class="rounded-left" type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${totalTimeLateRating == 'true' or totalTimeLateRating == 'false'}">
+                    <div th:insert="${totalTimeLateRating == 'true'} ? ~{table-fragments.html :: employeeRatingFull} : ~{table-fragments.html :: employeeRatingEmpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3>Facilities with most illegal work time by employees:</h3>
+                <form action="/illegalWorkTime">
+                    <input class="rounded-left" type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${illegalWorkTime == 'true' or illegalWorkTime == 'false'}">
+                    <div th:insert="${illegalWorkTime == 'true'} ? ~{table-fragments.html :: facilityRatingFull} : ~{table-fragments.html :: facilityRatingEnpty}"></div>
+                </div>
+            </div>
+
+            <div class="query-container">
+                <h3>Check system malfunctions (Registered multiple simultaneous passages):</h3>
+                <form action="/systemMalfunctions">
+                    <input class="rounded-left" type="submit" value="Execute">
+                </form>
+
+                <div class="table-container" th:if="${systemMalfunctions == 'true' or systemMalfunctions == 'false'}">
+                    <div th:insert="${systemMalfunctions == 'true'} ? ~{table-fragments.html :: malfunctionsTable} : ~{table-fragments.html :: malfunctionsEmpty}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form class="logout-form" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</body>
+</html>

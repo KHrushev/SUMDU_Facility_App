@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Response Template</title>
+</head>
+<body>
+    <table class="table" th:fragment="employeesPresent">
+        <tr class="table-headers">
+            <th class="table-header-cell">ID</th>
+            <th class="table-header-cell">Full Name</th>
+            <th class="table-header-cell">Username</th>
+            <th class="table-header-cell">Role</th>
+            <th class="table-header-cell">Facility ID</th>
+        </tr>
+        <tr th:each="employee : ${employees}" class="table-row">
+            <td class="table-cell" th:text="${employee.getId()}"></td>
+            <td class="table-cell" th:text="${employee.getFullName()}"></td>
+            <td class="table-cell" th:text="${employee.getUsername()}"></td>
+            <td class="table-cell" th:text="${employee.getRole()}"></td>
+            <td class="table-cell" th:text="${employee.getFacilityID()}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="employeesEmpty">
+        <h3>The query did not find any employees.</h3>
+    </div>
+
+    <table class="table" th:fragment="passagesPresent">
+        <tr class="table-headers">
+            <th class="table-header-cell">ID</th>
+            <th class="table-header-cell">Enter Time</th>
+            <th class="table-header-cell">Exit Time</th>
+            <th class="table-header-cell">Employee ID</th>
+            <th class="table-header-cell">Facility ID</th>
+            <th class="table-header-cell">Worktime</th>
+        </tr>
+        <tr th:each="passage : ${passages}" class="table-row">
+            <td class="table-cell" th:text="${passage.getId()}"></td>
+            <td class="table-cell" th:text="${passage.getEnterTime()}"></td>
+            <td class="table-cell" th:text="${passage.getExitTime()}"></td>
+            <td class="table-cell" th:text="${passage.getEmployeeID()}"></td>
+            <td class="table-cell" th:text="${passage.getFacilityID()}"></td>
+            <td class="table-cell" th:text="${passage.getWorktime()}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="passagesEmpty">
+        <h3>The query did not find any passages.</h3>
+    </div>
+
+    <div class="response-msg" th:fragment="passageRegistered">
+        <h3>Passage was registered successfully.</h3>
+    </div>
+
+    <div class="response-msg" th:fragment="passageIsNotRegistered">
+        <h3>Passage was not registered. Check your input and try again, please.</h3>
+    </div>
+
+    <div class="response-msg" th:fragment="inputError">
+        <h3>Operation was not completed due to invalid input. Check your input and try again, please.</h3>
+        <p th:text="${errorMsg}"></p>
+    </div>
+
+    <table class="table" th:fragment="facilitiesFound">
+        <tr class="table-headers">
+            <th class="table-header-cell">ID</th>
+            <th class="table-header-cell">Enter Time</th>
+
+        </tr>
+        <tr th:each="facility : ${facilities}" class="table-row">
+            <td class="table-cell" th:text="${facility.getId()}"></td>
+            <td class="table-cell" th:text="${facility.getFacilityName()}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="facilitiesNotFound">
+        <h3>No facilities found.</h3>
+    </div>
+
+    <table class="table" th:fragment="employeeRatingFull">
+        <tr class="table-headers">
+            <th class="table-header-cell">ID</th>
+            <th class="table-header-cell">Full Name</th>
+            <th class="table-header-cell">Role</th>
+            <th class="table-header-cell">Total Time Late</th>
+        </tr>
+        <tr th:each="item : ${rating}" class="table-row">
+            <td class="table-cell" th:text="${item.key.getId()}"></td>
+            <td class="table-cell" th:text="${item.key.getFullName()}"></td>
+            <td class="table-cell" th:text="${item.key.getRole()}"></td>
+            <td class="table-cell" th:text="${item.value}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="employeeRatingEmpty">
+        <h3>Could not retrieve employee rating. Try again later</h3>
+    </div>
+
+    <table class="table" th:fragment="facilityRatingFull">
+        <tr class="table-headers">
+            <th class="table-header-cell">ID</th>
+            <th class="table-header-cell">Total Illegal Work Time</th>
+        </tr>
+        <tr th:each="item : ${rating}" class="table-row">
+            <td class="table-cell" th:text="${item.key}"></td>
+            <td class="table-cell" th:text="${item.value}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="facilityRatingEnpty">
+        <h3>Could not retrieve facility rating. Try again later</h3>
+    </div>
+
+    <table class="table" th:fragment="malfunctionsTable">
+        <tr class="table-headers">
+            <th class="table-header-cell">PASSAGE ID 1</th>
+            <th class="table-header-cell">PASSAGE ID 2</th>
+        </tr>
+        <tr th:each="item : ${malfunctions}" class="table-row">
+            <td class="table-cell" th:text="${item.key}"></td>
+            <td class="table-cell" th:text="${item.value}"></td>
+        </tr>
+    </table>
+
+    <div class="response-msg" th:fragment="malfunctionsEmpty">
+        <h3>Could not retrieve facility rating. Try again later</h3>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Login Page</title>
+    <link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-message" th:if="${param.error}">
+            <p th:text="${session.error}" th:unless="${session == null}">[...]</p>
+        </div>
+        <div class="login-message" th:if="${param.logout}">You have been logged out.</div>
+        <form th:action="@{/login}" method="post">
+            <div class="input-field">
+                <label> Username : <input type="text" name="username" /> </label>
+            </div>
+            <div class="input-field">
+                <label> Password: <input type="password" name="password" /> </label>
+            </div>
+
+            <div><input type="submit" value="Sign In" /></div>
+        </form>
+    </div>
+</body>
+</html>

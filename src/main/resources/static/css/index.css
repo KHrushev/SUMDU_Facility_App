@@ -1,0 +1,135 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.panel-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background-color: #d69800;
+}
+
+.panel {
+    color: whitesmoke;
+    background-color: #16081d;
+    width: 75%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 5vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.panel h1 {
+    padding: 12px 24px;
+    border: 1px solid #d69800;
+    border-radius: 10px;
+    width: auto;
+    user-select: none;
+}
+
+.query-container {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.query-container form {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+}
+
+.query-container input[type="text"] {
+    height: 100%;
+    padding: 12px;
+    text-align: center;
+    border: none;
+}
+
+.query-container input[type="datetime-local"] {
+    height: 100%;
+    padding: 10px;
+    text-align: center;
+    border: none;
+}
+
+.query-container input[type="submit"] {
+    border: none;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 100%;
+    padding: 12px;
+    text-transform: uppercase;
+    outline: none;
+    background-color: #d69800;
+    cursor: pointer;
+}
+
+.rounded-left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.border-right {
+    border-right: 1px solid black !important;
+}
+
+.query-container input:focus {
+    outline: none;
+}
+
+.query-container .query-header {
+    padding: 20px;
+    text-decoration: underline #d69800;
+}
+
+.logout-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 14px;
+}
+
+.logout-form input {
+    padding: 12px;
+    cursor: pointer;
+    background-color: #16081d;
+    color: whitesmoke;
+    border-radius: 10px;
+    border: none;
+}
+
+.table-container {
+    margin: 0 auto;
+}
+
+.table-container table {
+    margin-top: 20px;
+    border: 1px solid #d69800;
+    border-radius: 10px;
+}
+
+.table-header-cell {
+    padding: 14px;
+    border-bottom: 1px solid #d69800;
+}
+
+.table-cell {
+    padding: 10px;
+}
+
+.response-msg {
+    margin-top: 30px;
+    text-transform: none;
+    text-decoration: none;
+}
