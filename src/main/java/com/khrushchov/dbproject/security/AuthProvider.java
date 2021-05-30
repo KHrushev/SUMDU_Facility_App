@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,9 @@ public class AuthProvider implements AuthenticationProvider {
         Employee employee = (Employee) userDetailsService.loadUserByUsername(username);
 
         if (username.equals(employee.getUsername()) && passwordEncoder.matches(password, employee.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(username, passwordEncoder.encode(password), List.of(employee::getRole));
+            List<GrantedAuthority> grantedAuthorities = new java.util.ArrayList<>();
+            grantedAuthorities.add(employee::getRole);
+            return new UsernamePasswordAuthenticationToken(username, passwordEncoder.encode(password), grantedAuthorities);
         } else {
             return null;
         }

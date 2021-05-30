@@ -42,7 +42,9 @@ public class Employee implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(this::getRole);
+        List<GrantedAuthority> grantedAuthorities = new java.util.ArrayList<>();
+        grantedAuthorities.add(this::getRole);
+        return grantedAuthorities;
     }
 
     public String getRole() {
