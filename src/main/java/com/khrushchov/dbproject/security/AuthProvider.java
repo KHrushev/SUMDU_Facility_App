@@ -1,9 +1,6 @@
 package com.khrushchov.dbproject.security;
 
 import com.khrushchov.dbproject.model.Employee;
-import com.khrushchov.dbproject.model.Facility;
-import com.khrushchov.dbproject.repositories.EmployeeRepository;
-import com.khrushchov.dbproject.repositories.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class AuthProvider implements AuthenticationProvider {
