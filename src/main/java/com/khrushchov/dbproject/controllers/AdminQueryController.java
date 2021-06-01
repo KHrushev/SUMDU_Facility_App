@@ -4,7 +4,6 @@ import com.khrushchov.dbproject.DAO.DAOConnection;
 import com.khrushchov.dbproject.DAO.OracleDAOConnection;
 import com.khrushchov.dbproject.model.Employee;
 import com.khrushchov.dbproject.model.Facility;
-import com.khrushchov.dbproject.model.Passage;
 import com.khrushchov.dbproject.repositories.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,7 +133,7 @@ public class AdminQueryController {
     public String systemMalfunctions(Model model) {
         DAOConnection daoConnection = OracleDAOConnection.getInstance();
 
-        Map<Integer, Integer> malfunctions = daoConnection.findFacilitiesByIllegalTimeSpent();
+        Map<Integer, Integer> malfunctions = daoConnection.findSystemMalfunctions();
 
         if (malfunctions.size()>0) {
             model.addAttribute("malfunctions", malfunctions);
